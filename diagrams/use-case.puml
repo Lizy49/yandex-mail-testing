@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+
+actor "Гость" as Guest
+actor "Авторизованный\nпользователь" as User
+
+rectangle "Яндекс Почта" {
+  usecase "Открыть страницу входа" as UC_LoginPage
+  usecase "Авторизоваться" as UC_Login
+  usecase "Восстановить доступ" as UC_Recovery
+  usecase "Открыть и прочитать письмо" as UC_Read
+  usecase "Создать и отправить письмо" as UC_Send
+  usecase "Проверить адрес получателя" as UC_Validate
+  usecase "Прикрепить файл" as UC_Attach
+  usecase "Сохранить черновик" as UC_Draft
+  usecase "Найти письмо" as UC_Search
+  usecase "Отфильтровать письма" as UC_Filter
+  usecase "Организовать письма по папкам" as UC_Folders
+  usecase "Настроить правило обработки" as UC_Rules
+  usecase "Выйти из аккаунта" as UC_Logout
+}
+
+Guest --> UC_LoginPage
+Guest --> UC_Login
+Guest --> UC_Recovery
+User --> UC_Read
+User --> UC_Send
+User --> UC_Draft
+User --> UC_Search
+User --> UC_Filter
+User --> UC_Folders
+User --> UC_Rules
+User --> UC_Attach
+User --> UC_Logout
+
+UC_Send ..> UC_Validate : <<include>>
+UC_Send ..> UC_Attach : <<extend>>
+UC_Login ..> UC_Recovery : <<extend>>
+@enduml
